@@ -1,0 +1,46 @@
+.Form {
+  padding: 15px;
+  font-size: 20px;
+  font-weight: 500;
+  background-color: var(--bg-form-color);
+  border: 2px solid var(--bg-border-color);
+  color: inherit;
+}
+
+.Input {
+  margin-top: 8px;
+  padding: 8px;
+  font-family: inherit;
+}
+
+.Input:focus {
+  outline: 2px solid var(--color-outline-btn);
+}
+
+.Label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.Btn {
+  display: inline-flex;
+  padding: 2px 10px;
+  border: 1px solid transparent;
+  border-color: transparent;
+  border-radius: 4px;
+  background-color: var(--color-outline-btn);
+  color: var(--text-btn-color);
+  font-size: 16px;
+  cursor: pointer;
+  transition: border 250ms var(--timing-function),
+    background-color 250ms var(--timing-function),
+    color 250ms var(--timing-function);
+}
+
+.Btn:hover,
+.Btn:focus {
+  background-color: var(--bg-btn-color-hover);
+  border: 1px solid var(--border-color-hover);
+  color: var(--text-btn-hover);
+}
