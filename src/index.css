@@ -1,4 +1,17 @@
-@import-normalize; /* bring in normalize.css styles */
+@import-normalize;
+:root {
+  --bg-body-color: #6584f5;
+  --bg-form-color: #c2c8e0;
+  --bg-btn-color: #331aa5;
+  --bg-border-color: #091d83;
+  --color-outline-btn: #0b32f7;
+  --bg-btn-color-hover: #051d94;
+  --text-color-primary: #031c68;
+  --text-btn-color: #e6e7ec;
+  --text-btn-hover: #abb3db;
+  --border-color-hover: #e6e7ec;
+  --timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
 
 body {
   margin: 0;
@@ -7,9 +20,24 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-body-color);
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+ul,
+ol {
+  margin: 0;
+  padding: 0;
 }

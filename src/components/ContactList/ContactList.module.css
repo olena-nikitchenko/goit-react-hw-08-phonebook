@@ -1,0 +1,60 @@
+.Btn {
+  display: inline-flex;
+  padding: 2px 10px;
+  border: 1px solid transparent;
+  border-color: transparent;
+  border-radius: 4px;
+  background-color: var(--color-outline-btn);
+  color: var(--text-btn-color);
+  font-size: 16px;
+  cursor: pointer;
+  transition: border 250ms var(--timing-function),
+    background-color 250ms var(--timing-function),
+    color 250ms var(--timing-function);
+}
+
+.Btn:hover,
+.Btn:focus {
+  background-color: var(--bg-btn-color-hover);
+  border: 1px solid var(--border-color-hover);
+  color: var(--text-btn-hover);
+}
+
+.ContactList {
+  width: 100%;
+  font-size: 20px;
+  font-weight: 500;
+  color: inherit;
+}
+
+.ContactListItem {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.ContactListItem:last-child {
+  margin-bottom: 0;
+}
+
+.ContactListItem::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  background-color: var(--text-color-primary);
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.ContactListSpan {
+  padding-left: 20px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  font-size: 16px;
+}
