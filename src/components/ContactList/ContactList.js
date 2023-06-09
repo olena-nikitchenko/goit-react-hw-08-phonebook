@@ -1,47 +1,38 @@
-import { useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
+import { useSelector, useDispatch } from 'react-redux';
 import {
-  useGetContactsQuery,
-  useDeleteContactMutation,
-} from '../../redux/contactsSlice.js';
-import { getFilterValue } from '../../redux/filterSlice.js';
+  selectAllContacts,
+  selectLoading,
+} from '../../redux/contacts/selectors';
+import { getFilterValue } from 'redux/filterSlice.js';
+import { deleteContact } from 'redux/contacts/operations.js';
+import { Loader } from '../Loader/Loader';
 import css from './ContactList.module.css';
 
 export const ContactList = () => {
-  const deleteContactId = async id => {
-    try {
-      await deleteContact(id);
-      toast.success(`Contact deleted `);
-    } catch (error) {
-      toast.error('Oops! Something went wrong. Please, try again!');
-    }
-  };
-
-  const filtersContacts = (contacts, filter) =>
-    contacts.filter(contact =>
-      contact.name.toLowerCase().includes(filter.toLowerCase())
-    );
+  const contacts = useSelector(selectAllContacts);
+  const isLoading = useSelector(selectLoading);
+  const dispatch = useDispatch();
 
   const filter = useSelector(getFilterValue);
-  const { data: contacts = [], isLoading, error } = useGetContactsQuery();
-  const [deleteContact] = useDeleteContactMutation();
-  const contactsItems = filtersContacts(contacts, filter);
+  const filterContacts = contacts.filter(contact =>
+    contact.name.toLowerCase().includes(filter)
+  );
+
   return (
     <ul className={css.ContactList}>
-      {isLoading && <p>Loading contacts...</p>}
-      {error && <p>{error}</p>}
-
-      {contactsItems.length > 0 ? (
+      {isLoading && <Loader />}
+      {contacts?.length > 0 ? (
         <>
-          {contactsItems.map(({ id, name, phone }) => (
+          {filterContacts.map(({ id, name, number }) => (
             <li key={id} className={css.ContactListItem}>
-              <span className={css.ContactListSpan}>
-                {name}: {phone}
-              </span>
+              <p>
+                <span>{name} :</span>
+                {number}
+              </p>
               <button
                 className={css.Btn}
                 type="button"
-                onClick={() => deleteContactId(id)}
+                onClick={() => dispatch(deleteContact(id))}
               >
                 Delete
               </button>
