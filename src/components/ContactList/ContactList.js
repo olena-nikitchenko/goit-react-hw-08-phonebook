@@ -7,7 +7,7 @@ import {
 import { getFilterValue } from '../../redux/filterSlice.js';
 import css from './ContactList.module.css';
 
-const ContactList = () => {
+export const ContactList = () => {
   const deleteContactId = async id => {
     try {
       await deleteContact(id);
@@ -54,5 +54,3 @@ const ContactList = () => {
     </ul>
   );
 };
-
-export default ContactList;
