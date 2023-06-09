@@ -7,7 +7,7 @@ import {
 } from '../../redux/contactsSlice.js';
 import css from './Phonebook.module.css';
 
-const PhonebookForm = () => {
+export const PhonebookForm = () => {
   const [newName, setNewName] = useState('');
   const [newPhone, setNewPhone] = useState('');
   const [addContact] = useAddContactMutation();
@@ -82,5 +82,3 @@ const PhonebookForm = () => {
     </form>
   );
 };
-
-export default PhonebookForm;
