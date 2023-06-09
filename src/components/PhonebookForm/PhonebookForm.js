@@ -1,84 +1,63 @@
-import React, { useState } from 'react';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import {
-  useGetContactsQuery,
-  useAddContactMutation,
-} from '../../redux/contactsSlice.js';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectAllContacts } from 'redux/contacts/selectors';
+import { addContact } from 'redux/contacts/operations';
+import toast from 'react-hot-toast';
+import { nanoid } from 'nanoid';
+import { BsJournalPlus } from 'react-icons/bs';
+import { BsTelephone } from 'react-icons/bs';
 import css from './Phonebook.module.css';
 
 export const PhonebookForm = () => {
-  const [newName, setNewName] = useState('');
-  const [newPhone, setNewPhone] = useState('');
-  const [addContact] = useAddContactMutation();
-  const { data } = useGetContactsQuery();
+  const dispatch = useDispatch();
+  const contacts = useSelector(selectAllContacts);
 
-  const reset = () => {
-    setNewName('');
-    setNewPhone('');
-  };
+  const handleSubmit = async e => {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.name.value;
+    const number = form.number.value;
 
-  const addNumberContact = async () => {
-    const newContact = { name: newName, phone: newPhone };
-
-    const isExistContact = data.find(
-      contact =>
-        contact.name === newContact.name && contact.phone === newContact.phone
-    );
-
-    if (isExistContact) {
-      toast.error(
-        `Contact with the name ${newContact.name} and phone number ${newContact.phone} already exists`
-      );
+    if (contacts.find(cont => cont.name === name)) {
+      toast.error(`${name} is already your friend...`);
       return;
     }
 
-    try {
-      await addContact(newContact);
-      toast.success(`Contact ${newContact.name} added`);
-    } catch (error) {
-      toast.error('Oops! Something went wrong. Please try again!');
-    }
-  };
-
-  const handleAddContacts = e => {
-    e.preventDefault();
-    addNumberContact();
-    reset();
+    dispatch(
+      addContact({
+        id: nanoid(),
+        name,
+        number,
+      })
+    );
+    toast.success(`${name} is now on your Friends List`);
+    form.reset();
   };
 
   return (
-    <form onSubmit={handleAddContacts} className={css.Form}>
+    <form onSubmit={handleSubmit} className={css.Form}>
       <label className={css.Label}>
-        Name
+        Name <BsJournalPlus />
         <input
           type="text"
-          placeholder="Enter name"
           name="name"
-          pattern="[A-Za-z\s]+"
+          placeholder="Enter name"
+          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
-          value={newName}
-          onChange={e => setNewName(e.target.value)}
-          className={css.Input}
         />
       </label>
       <label className={css.Label}>
-        Number
+        Number <BsTelephone />
         <input
           type="tel"
-          placeholder="Enter number"
           name="number"
+          placeholder="Enter phone number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
-          value={newPhone}
-          onChange={e => setNewPhone(e.target.value)}
-          className={css.Input}
         />
       </label>
-      <button type="submit" className={css.Btn}>
-        Add contact
-      </button>
+      <button type="submit">Add contact</button>
     </form>
   );
 };
