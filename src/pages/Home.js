@@ -9,6 +9,7 @@ const styles = {
     fontWeight: 500,
     fontSize: 48,
     textAlign: 'center',
+    color: 'var(--text-color-primary)',
   },
 };
 
