@@ -6,4 +6,5 @@
 
 .username {
   font-weight: 700;
+  color: var(--text-color-primary);
 }

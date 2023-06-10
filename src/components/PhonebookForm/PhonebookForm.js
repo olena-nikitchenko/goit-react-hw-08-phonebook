@@ -38,6 +38,7 @@ export const PhonebookForm = () => {
       <label className={css.Label}>
         Name <BsJournalPlus />
         <input
+          className={css.Input}
           type="text"
           name="name"
           placeholder="Enter name"
@@ -49,6 +50,7 @@ export const PhonebookForm = () => {
       <label className={css.Label}>
         Number <BsTelephone />
         <input
+          className={css.Input}
           type="tel"
           name="number"
           placeholder="Enter phone number"
@@ -57,7 +59,9 @@ export const PhonebookForm = () => {
           required
         />
       </label>
-      <button type="submit">Add contact</button>
+      <button type="submit" className={css.Btn}>
+        Add contact
+      </button>
     </form>
   );
 };
